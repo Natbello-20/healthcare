@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h3>My Appointments</h3>
+<div class="card mt-3">
+    <div class="card-body">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Schedule</th>
+                    <th>Status</th>
+                    <th>Consultation Notes / Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in appointments %}
+                <tr>
+                    <td>
+                        <strong>{{ a.patient.name }}</strong><br>
+                        <small>{{ a.patient.phone }}</small>
+                    </td>
+                    <td>{{ a.date }} at {{ a.time.strftime('%H:%M') }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if a.status == 'Scheduled' %}bg-primary
+                            {% elif a.status == 'Completed' %}bg-success
+                            {% else %}bg-danger{% endif %}">
+                            {{ a.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('update_appointment', id=a.id) }}" method="POST" class="d-flex">
+                            <select name="status" class="form-select form-select-sm me-2" style="width: 130px;">
+                                <option value="Scheduled" {% if a.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                                <option value="Completed" {% if a.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                <option value="No Show" {% if a.status == 'No Show' %}selected{% endif %}>No Show</option>
+                                <option value="Cancelled" {% if a.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                            <input type="text" name="notes" class="form-control form-control-sm me-2" placeholder="Add notes..." value="{{ a.notes or '' }}">
+                            <button class="btn btn-sm btn-dark">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white">Add Department</div>
+            <div class="card-body">
+                <form action="{{ url_for('add_dept') }}" method="POST">
+                    <input type="text" name="name" class="form-control mb-2" placeholder="Dept Name" required>
+                    <button class="btn btn-primary btn-sm w-100">Add Dept</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-dark text-white">Register Doctor</div>
+            <div class="card-body">
+                <form action="{{ url_for('add_doctor') }}" method="POST">
+                    <input type="text" name="username" class="form-control mb-2" placeholder="Username" required>
+                    <input type="password" name="password" class="form-control mb-2" placeholder="Password" required>
+                    <input type="text" name="name" class="form-control mb-2" placeholder="Doctor Full Name" required>
+                    <input type="text" name="specialization" class="form-control mb-2" placeholder="Specialization" required>
+                    <select name="department_id" class="form-select mb-2" required>
+                        <option value="">Select Department</option>
+                        {% for d in depts %}
+                        <option value="{{ d.id }}">{{ d.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-primary btn-sm w-100">Register Doctor</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">System Appointments (Overview)</div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>Doctor</th>
+                            <th>Patient</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in appts %}
+                        <tr>
+                            <td>{{ a.date }} at {{ a.time.strftime('%H:%M') }}</td>
+                            <td>Dr. {{ a.doctor.name }}</td>
+                            <td>{{ a.patient.name }}</td>
+                            <td><span class="badge bg-secondary">{{ a.status }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h3 class="text-center mb-4">Book Appointment</h3>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Select Doctor</label>
+                    <select name="doctor_id" class="form-select" required>
+                        <option value="">Choose...</option>
+                        {% for d in doctors %}
+                        <option value="{{ d.id }}">Dr. {{ d.name }} ({{ d.specialization }} - {{ d.dept.name }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" name="date" class="form-control" required min="{{ now }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Time Slot</label>
+                        <input type="time" name="time" class="form-control" required>
+                        <small class="text-muted">Slots are per exact time (e.g., 09:00)</small>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-link w-100 mt-2">Back to Dashboard</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

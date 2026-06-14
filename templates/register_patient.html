@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h3 class="text-center mb-4">Patient Registration</h3>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" name="phone" class="form-control" required>
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <label class="form-label">Choose Username</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Create Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
